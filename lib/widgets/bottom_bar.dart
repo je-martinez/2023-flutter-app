@@ -235,9 +235,17 @@ class _FloatingBottomTabs extends StatelessWidget {
     return exist ? colors[currentPage] : unselectedColor;
   }
 
-  Color getSelectedOrUnselectedColor(int itemIndex) {
+  Color getOptionColor(int itemIndex) {
     return itemIndex == currentPage ? getCurrentColor() : unselectedColor;
   }
+
+  static List<IconData> buttons = [
+    Icons.home,
+    Icons.search,
+    Icons.add,
+    Icons.favorite,
+    Icons.settings
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -247,53 +255,31 @@ class _FloatingBottomTabs extends StatelessWidget {
       indicator: UnderlineTabIndicator(
           borderSide: BorderSide(color: getCurrentColor(), width: 4),
           insets: const EdgeInsets.fromLTRB(16, 0, 16, 8)),
-      tabs: [
-        SizedBox(
-          height: 55,
-          width: 40,
-          child: Center(
-              child: Icon(
-            Icons.home,
-            color: getSelectedOrUnselectedColor(0),
-          )),
-        ),
-        SizedBox(
-          height: 55,
-          width: 40,
-          child: Center(
-              child: Icon(
-            Icons.search,
-            color: getSelectedOrUnselectedColor(1),
-          )),
-        ),
-        SizedBox(
-          height: 55,
-          width: 40,
-          child: Center(
-              child: Icon(
-            Icons.add,
-            color: getSelectedOrUnselectedColor(2),
-          )),
-        ),
-        SizedBox(
-          height: 55,
-          width: 40,
-          child: Center(
-              child: Icon(
-            Icons.favorite,
-            color: getSelectedOrUnselectedColor(3),
-          )),
-        ),
-        SizedBox(
-          height: 55,
-          width: 40,
-          child: Center(
-              child: Icon(
-            Icons.settings,
-            color: getSelectedOrUnselectedColor(4),
-          )),
-        ),
-      ],
+      tabs: buttons
+          .map((icon) => _FloatingTabBarButton(
+              icon: icon, color: getOptionColor(buttons.indexOf(icon))))
+          .toList(),
+    );
+  }
+}
+
+class _FloatingTabBarButton extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+  const _FloatingTabBarButton(
+      {required this.icon, required this.color, Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 55,
+      width: 40,
+      child: Center(
+          child: Icon(
+        icon,
+        color: color,
+      )),
     );
   }
 }
