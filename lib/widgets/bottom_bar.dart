@@ -5,7 +5,7 @@ import '../providers/inherited_data_provider.dart';
 
 class BottomBar extends StatefulWidget {
   final Widget child;
-  final int currentPage;
+  final int currentScreen;
   final TabController tabController;
   final List<Color> colors;
   final Color unselectedColor;
@@ -14,7 +14,7 @@ class BottomBar extends StatefulWidget {
   final double start;
   const BottomBar(
       {required this.child,
-      required this.currentPage,
+      required this.currentScreen,
       required this.tabController,
       required this.colors,
       required this.unselectedColor,
@@ -150,7 +150,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
                     child: _FloatingBottomTabs(
                         colors: widget.colors,
                         tabController: widget.tabController,
-                        currentPage: widget.currentPage,
+                        currentScreen: widget.currentScreen,
                         unselectedColor: widget.unselectedColor),
                   )),
             ),
@@ -220,23 +220,23 @@ class _ButtonToGoUp extends StatelessWidget {
 class _FloatingBottomTabs extends StatelessWidget {
   final List<Color> colors;
   final TabController tabController;
-  final int currentPage;
+  final int currentScreen;
   final Color unselectedColor;
   const _FloatingBottomTabs(
       {required this.colors,
       required this.tabController,
-      required this.currentPage,
+      required this.currentScreen,
       required this.unselectedColor,
       Key? key})
       : super(key: key);
 
   Color getCurrentColor() {
-    bool exist = colors.asMap().containsKey(currentPage);
-    return exist ? colors[currentPage] : unselectedColor;
+    bool exist = colors.asMap().containsKey(currentScreen);
+    return exist ? colors[currentScreen] : unselectedColor;
   }
 
   Color getOptionColor(int itemIndex) {
-    return itemIndex == currentPage ? getCurrentColor() : unselectedColor;
+    return itemIndex == currentScreen ? getCurrentColor() : unselectedColor;
   }
 
   static List<IconData> buttons = [
