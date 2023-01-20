@@ -91,6 +91,24 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
     });
   }
 
+  void onPressArrowUp() {
+    scrollBottomBarController
+        .animateTo(
+      scrollBottomBarController.position.minScrollExtent,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeIn,
+    )
+        .then((value) {
+      if (mounted) {
+        setState(() {
+          isOnTop = true;
+          isScrollingDown = false;
+        });
+      }
+      showBottomBar();
+    });
+  }
+
   @override
   void dispose() {
     scrollBottomBarController.removeListener(() {});
@@ -108,55 +126,12 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
           scrollController: scrollBottomBarController,
           child: widget.child,
         ),
-        Positioned(
-          bottom: widget.start,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 50),
-            curve: Curves.easeIn,
-            width: isOnTop == true ? 0 : 40,
-            height: isOnTop == true ? 0 : 40,
-            decoration: BoxDecoration(
-              color: widget.barColor,
-              shape: BoxShape.circle,
-            ),
-            padding: EdgeInsets.zero,
-            margin: EdgeInsets.zero,
-            child: ClipOval(
-              child: Material(
-                color: Colors.transparent,
-                child: SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: Center(
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        scrollBottomBarController
-                            .animateTo(
-                          scrollBottomBarController.position.minScrollExtent,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeIn,
-                        )
-                            .then((value) {
-                          if (mounted) {
-                            setState(() {
-                              isOnTop = true;
-                              isScrollingDown = false;
-                            });
-                          }
-                          showBottomBar();
-                        });
-                      },
-                      icon: Icon(
-                        Icons.keyboard_arrow_up_sharp,
-                        color: widget.unselectedColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+        _ButtonToGoUp(
+          start: widget.start,
+          isOnTop: isOnTop,
+          barColor: widget.barColor,
+          onPressArrowUp: onPressArrowUp,
+          unselectedColor: widget.unselectedColor,
         ),
         Positioned(
           bottom: widget.start,
@@ -172,85 +147,154 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
                   ),
                   child: Material(
                     color: widget.barColor,
-                    child: TabBar(
-                      indicatorPadding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
-                      controller: widget.tabController,
-                      indicator: UnderlineTabIndicator(
-                          borderSide: BorderSide(
-                              color: widget.currentPage == 0
-                                  ? widget.colors[0]
-                                  : widget.currentPage == 1
-                                      ? widget.colors[1]
-                                      : widget.currentPage == 2
-                                          ? widget.colors[2]
-                                          : widget.currentPage == 3
-                                              ? widget.colors[3]
-                                              : widget.currentPage == 4
-                                                  ? widget.colors[4]
-                                                  : widget.unselectedColor,
-                              width: 4),
-                          insets: const EdgeInsets.fromLTRB(16, 0, 16, 8)),
-                      tabs: [
-                        SizedBox(
-                          height: 55,
-                          width: 40,
-                          child: Center(
-                              child: Icon(
-                            Icons.home,
-                            color: widget.currentPage == 0
-                                ? widget.colors[0]
-                                : widget.unselectedColor,
-                          )),
-                        ),
-                        SizedBox(
-                          height: 55,
-                          width: 40,
-                          child: Center(
-                              child: Icon(
-                            Icons.search,
-                            color: widget.currentPage == 1
-                                ? widget.colors[1]
-                                : widget.unselectedColor,
-                          )),
-                        ),
-                        SizedBox(
-                          height: 55,
-                          width: 40,
-                          child: Center(
-                              child: Icon(
-                            Icons.add,
-                            color: widget.currentPage == 2
-                                ? widget.colors[2]
-                                : widget.unselectedColor,
-                          )),
-                        ),
-                        SizedBox(
-                          height: 55,
-                          width: 40,
-                          child: Center(
-                              child: Icon(
-                            Icons.favorite,
-                            color: widget.currentPage == 3
-                                ? widget.colors[3]
-                                : widget.unselectedColor,
-                          )),
-                        ),
-                        SizedBox(
-                          height: 55,
-                          width: 40,
-                          child: Center(
-                              child: Icon(
-                            Icons.settings,
-                            color: widget.currentPage == 4
-                                ? widget.colors[4]
-                                : widget.unselectedColor,
-                          )),
-                        ),
-                      ],
-                    ),
+                    child: FloatingBottomTabs(
+                        colors: widget.colors,
+                        tabController: widget.tabController,
+                        currentPage: widget.currentPage,
+                        unselectedColor: widget.unselectedColor),
                   )),
             ),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ButtonToGoUp extends StatelessWidget {
+  final double start;
+  final bool isOnTop;
+  final Color barColor;
+  final Function onPressArrowUp;
+  final Color unselectedColor;
+  const _ButtonToGoUp(
+      {required this.start,
+      required this.isOnTop,
+      required this.barColor,
+      required this.onPressArrowUp,
+      required this.unselectedColor,
+      Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: start,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 50),
+        curve: Curves.easeIn,
+        width: isOnTop == true ? 0 : 40,
+        height: isOnTop == true ? 0 : 40,
+        decoration: BoxDecoration(
+          color: barColor,
+          shape: BoxShape.circle,
+        ),
+        padding: EdgeInsets.zero,
+        margin: EdgeInsets.zero,
+        child: ClipOval(
+          child: Material(
+            color: Colors.transparent,
+            child: SizedBox(
+              height: 40,
+              width: 40,
+              child: Center(
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    onPressArrowUp();
+                  },
+                  icon: Icon(
+                    Icons.keyboard_arrow_up_sharp,
+                    color: unselectedColor,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class FloatingBottomTabs extends StatelessWidget {
+  final List<Color> colors;
+  final TabController tabController;
+  final int currentPage;
+  final Color unselectedColor;
+  const FloatingBottomTabs(
+      {required this.colors,
+      required this.tabController,
+      required this.currentPage,
+      required this.unselectedColor,
+      Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TabBar(
+      indicatorPadding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
+      controller: tabController,
+      indicator: UnderlineTabIndicator(
+          borderSide: BorderSide(
+              color: currentPage == 0
+                  ? colors[0]
+                  : currentPage == 1
+                      ? colors[1]
+                      : currentPage == 2
+                          ? colors[2]
+                          : currentPage == 3
+                              ? colors[3]
+                              : currentPage == 4
+                                  ? colors[4]
+                                  : unselectedColor,
+              width: 4),
+          insets: const EdgeInsets.fromLTRB(16, 0, 16, 8)),
+      tabs: [
+        SizedBox(
+          height: 55,
+          width: 40,
+          child: Center(
+              child: Icon(
+            Icons.home,
+            color: currentPage == 0 ? colors[0] : unselectedColor,
+          )),
+        ),
+        SizedBox(
+          height: 55,
+          width: 40,
+          child: Center(
+              child: Icon(
+            Icons.search,
+            color: currentPage == 1 ? colors[1] : unselectedColor,
+          )),
+        ),
+        SizedBox(
+          height: 55,
+          width: 40,
+          child: Center(
+              child: Icon(
+            Icons.add,
+            color: currentPage == 2 ? colors[2] : unselectedColor,
+          )),
+        ),
+        SizedBox(
+          height: 55,
+          width: 40,
+          child: Center(
+              child: Icon(
+            Icons.favorite,
+            color: currentPage == 3 ? colors[3] : unselectedColor,
+          )),
+        ),
+        SizedBox(
+          height: 55,
+          width: 40,
+          child: Center(
+              child: Icon(
+            Icons.settings,
+            color: currentPage == 4 ? colors[4] : unselectedColor,
+          )),
         ),
       ],
     );
