@@ -147,7 +147,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
                   ),
                   child: Material(
                     color: widget.barColor,
-                    child: FloatingBottomTabs(
+                    child: _FloatingBottomTabs(
                         colors: widget.colors,
                         tabController: widget.tabController,
                         currentPage: widget.currentPage,
@@ -217,12 +217,12 @@ class _ButtonToGoUp extends StatelessWidget {
   }
 }
 
-class FloatingBottomTabs extends StatelessWidget {
+class _FloatingBottomTabs extends StatelessWidget {
   final List<Color> colors;
   final TabController tabController;
   final int currentPage;
   final Color unselectedColor;
-  const FloatingBottomTabs(
+  const _FloatingBottomTabs(
       {required this.colors,
       required this.tabController,
       required this.currentPage,
@@ -230,25 +230,22 @@ class FloatingBottomTabs extends StatelessWidget {
       Key? key})
       : super(key: key);
 
+  Color getCurrentColor() {
+    bool exist = colors.asMap().containsKey(currentPage);
+    return exist ? colors[currentPage] : unselectedColor;
+  }
+
+  Color getSelectedOrUnselectedColor(int itemIndex) {
+    return itemIndex == currentPage ? getCurrentColor() : unselectedColor;
+  }
+
   @override
   Widget build(BuildContext context) {
     return TabBar(
       indicatorPadding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
       controller: tabController,
       indicator: UnderlineTabIndicator(
-          borderSide: BorderSide(
-              color: currentPage == 0
-                  ? colors[0]
-                  : currentPage == 1
-                      ? colors[1]
-                      : currentPage == 2
-                          ? colors[2]
-                          : currentPage == 3
-                              ? colors[3]
-                              : currentPage == 4
-                                  ? colors[4]
-                                  : unselectedColor,
-              width: 4),
+          borderSide: BorderSide(color: getCurrentColor(), width: 4),
           insets: const EdgeInsets.fromLTRB(16, 0, 16, 8)),
       tabs: [
         SizedBox(
@@ -257,7 +254,7 @@ class FloatingBottomTabs extends StatelessWidget {
           child: Center(
               child: Icon(
             Icons.home,
-            color: currentPage == 0 ? colors[0] : unselectedColor,
+            color: getSelectedOrUnselectedColor(0),
           )),
         ),
         SizedBox(
@@ -266,7 +263,7 @@ class FloatingBottomTabs extends StatelessWidget {
           child: Center(
               child: Icon(
             Icons.search,
-            color: currentPage == 1 ? colors[1] : unselectedColor,
+            color: getSelectedOrUnselectedColor(1),
           )),
         ),
         SizedBox(
@@ -275,7 +272,7 @@ class FloatingBottomTabs extends StatelessWidget {
           child: Center(
               child: Icon(
             Icons.add,
-            color: currentPage == 2 ? colors[2] : unselectedColor,
+            color: getSelectedOrUnselectedColor(2),
           )),
         ),
         SizedBox(
@@ -284,7 +281,7 @@ class FloatingBottomTabs extends StatelessWidget {
           child: Center(
               child: Icon(
             Icons.favorite,
-            color: currentPage == 3 ? colors[3] : unselectedColor,
+            color: getSelectedOrUnselectedColor(3),
           )),
         ),
         SizedBox(
@@ -293,7 +290,7 @@ class FloatingBottomTabs extends StatelessWidget {
           child: Center(
               child: Icon(
             Icons.settings,
-            color: currentPage == 4 ? colors[4] : unselectedColor,
+            color: getSelectedOrUnselectedColor(4),
           )),
         ),
       ],
