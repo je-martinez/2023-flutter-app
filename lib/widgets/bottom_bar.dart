@@ -111,7 +111,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
         Positioned(
           bottom: widget.start,
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 50),
             curve: Curves.easeIn,
             width: isOnTop == true ? 0 : 40,
             height: isOnTop == true ? 0 : 40,
@@ -148,7 +148,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
                         });
                       },
                       icon: Icon(
-                        Icons.arrow_upward_rounded,
+                        Icons.keyboard_arrow_up_sharp,
                         color: widget.unselectedColor,
                       ),
                     ),
