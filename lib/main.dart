@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'layout/auth_layout.dart';
 import 'layout/main_layout.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const MainLayout(),
+      home: const AuthLayout(),
     );
   }
 }
