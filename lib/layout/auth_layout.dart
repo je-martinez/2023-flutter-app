@@ -22,12 +22,15 @@ class _AuthLayoutState extends State<AuthLayout> {
               padding: const EdgeInsets.all(30),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
                   children: const [
-                    _Titles(
-                      title: loginTitle,
-                      subtitle: loginSubtitle,
-                    ),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                            padding: EdgeInsets.only(bottom: 30),
+                            child: _Titles(
+                              title: loginTitle,
+                              subtitle: loginSubtitle,
+                            ))),
                     LoginForm()
                   ]),
             )));
@@ -78,6 +81,12 @@ class _LoginFormState extends State<LoginForm> {
     password: ["", Validators.email, Validators.required]
   });
 
+  void onSubmit() {
+    if (authForm.valid) {
+      //Do Stuff
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ReactiveForm(
@@ -99,6 +108,32 @@ class _LoginFormState extends State<LoginForm> {
               validationMessages: {
                 'required': (error) => "Password is a required field."
               },
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25)))),
+                    child: Padding(
+                        padding: const EdgeInsets.all(9),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: const [
+                            Text(loginButtonTitle),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Icon(
+                              Icons.arrow_forward,
+                              size: 24.0,
+                            ),
+                          ],
+                        )),
+                  )),
             )
           ],
         ));
