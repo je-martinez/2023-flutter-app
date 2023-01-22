@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 import '../utils/utils.dart';
@@ -50,15 +51,14 @@ class _Titles extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(
+          style: GoogleFonts.aBeeZee(
             fontSize: 45,
             fontWeight: FontWeight.bold,
           ),
         ),
         Text(
           subtitle,
-          style: const TextStyle(
-              fontSize: 16, color: Colors.grey, fontWeight: FontWeight.w700),
+          style: GoogleFonts.aBeeZee(fontSize: 15, fontWeight: FontWeight.w500),
         )
       ],
     );
@@ -78,8 +78,12 @@ class _LoginFormState extends State<LoginForm> {
 
   final authForm = fb.group({
     username: ["", Validators.email, Validators.required],
-    password: ["", Validators.email, Validators.required]
+    password: ["", Validators.required]
   });
+
+  String get usernameFormValue {
+    return authForm.control(username).value as String;
+  }
 
   void onSubmit() {
     if (authForm.valid) {
@@ -94,17 +98,22 @@ class _LoginFormState extends State<LoginForm> {
         child: Column(
           children: [
             ReactiveTextField(
-              decoration:
-                  const InputDecoration(hintText: "Please type your username"),
+              decoration: InputDecoration(
+                  hintText: "Please type your username",
+                  errorStyle: GoogleFonts.aBeeZee()),
+              style: GoogleFonts.aBeeZee(),
               formControlName: username,
               validationMessages: {
+                'email': (error) => "$usernameFormValue is not a valid email",
                 'required': (error) => "Username is a required field"
               },
             ),
             ReactiveTextField(
-              decoration:
-                  const InputDecoration(hintText: "Please type your password"),
+              decoration: InputDecoration(
+                  hintText: "Please type your password",
+                  errorStyle: GoogleFonts.aBeeZee()),
               formControlName: password,
+              style: GoogleFonts.aBeeZee(),
               validationMessages: {
                 'required': (error) => "Password is a required field."
               },
@@ -122,12 +131,15 @@ class _LoginFormState extends State<LoginForm> {
                         padding: const EdgeInsets.all(9),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Text(loginButtonTitle),
-                            SizedBox(
+                          children: [
+                            Text(
+                              loginButtonTitle,
+                              style: GoogleFonts.aBeeZee(),
+                            ),
+                            const SizedBox(
                               width: 15,
                             ),
-                            Icon(
+                            const Icon(
                               Icons.arrow_forward,
                               size: 24.0,
                             ),
