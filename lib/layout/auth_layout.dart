@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 import '../utils/utils.dart';
+import '../widgets/widgets.dart';
 
 class AuthLayout extends StatefulWidget {
   const AuthLayout({super.key});
@@ -24,15 +26,12 @@ class _AuthLayoutState extends State<AuthLayout> {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                            padding: EdgeInsets.only(bottom: 30),
-                            child: _Titles(
-                              title: loginTitle,
-                              subtitle: loginSubtitle,
-                            ))),
-                    LoginForm()
+                    _Titles(
+                      title: loginTitle,
+                      subtitle: loginSubtitle,
+                    ),
+                    _SignInOptions(),
+                    _LoginForm()
                   ]),
             )));
   }
@@ -46,33 +45,38 @@ class _Titles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: GoogleFonts.aBeeZee(
-            fontSize: 45,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          subtitle,
-          style: GoogleFonts.aBeeZee(fontSize: 15, fontWeight: FontWeight.w500),
-        )
-      ],
-    );
+    return Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+            padding: const EdgeInsets.only(bottom: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.poppins(
+                    fontSize: 45,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  subtitle,
+                  style: GoogleFonts.poppins(
+                      fontSize: 15, fontWeight: FontWeight.w500),
+                )
+              ],
+            )));
   }
 }
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+class _LoginForm extends StatefulWidget {
+  const _LoginForm({Key? key}) : super(key: key);
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  State<_LoginForm> createState() => _LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _LoginFormState extends State<_LoginForm> {
   static String username = "username";
   static String password = "password";
 
@@ -100,8 +104,8 @@ class _LoginFormState extends State<LoginForm> {
             ReactiveTextField(
               decoration: InputDecoration(
                   hintText: "Please type your username",
-                  errorStyle: GoogleFonts.aBeeZee()),
-              style: GoogleFonts.aBeeZee(),
+                  errorStyle: GoogleFonts.poppins()),
+              style: GoogleFonts.poppins(),
               formControlName: username,
               validationMessages: {
                 'email': (error) => "$usernameFormValue is not a valid email",
@@ -111,9 +115,9 @@ class _LoginFormState extends State<LoginForm> {
             ReactiveTextField(
               decoration: InputDecoration(
                   hintText: "Please type your password",
-                  errorStyle: GoogleFonts.aBeeZee()),
+                  errorStyle: GoogleFonts.poppins()),
               formControlName: password,
-              style: GoogleFonts.aBeeZee(),
+              style: GoogleFonts.poppins(),
               validationMessages: {
                 'required': (error) => "Password is a required field."
               },
@@ -134,7 +138,7 @@ class _LoginFormState extends State<LoginForm> {
                           children: [
                             Text(
                               loginButtonTitle,
-                              style: GoogleFonts.aBeeZee(),
+                              style: GoogleFonts.poppins(),
                             ),
                             const SizedBox(
                               width: 15,
@@ -149,5 +153,55 @@ class _LoginFormState extends State<LoginForm> {
             )
           ],
         ));
+  }
+}
+
+class _SignInOptions extends StatelessWidget {
+  const _SignInOptions({Key? key}) : super(key: key);
+
+  void signInGoogle() {}
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 70.0),
+          child: TextButton(
+              onPressed: signInGoogle,
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8))),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue)),
+              child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                                padding: EdgeInsets.only(right: 15),
+                                child: FaIcon(
+                                  FontAwesomeIcons.google,
+                                  color: Colors.white,
+                                  size: 15,
+                                ))),
+                        Text(
+                          signInWithGoogleButton,
+                          style: GoogleFonts.poppins(
+                              color: Colors.white, fontWeight: FontWeight.w600),
+                          textAlign: TextAlign.center,
+                        )
+                      ]))),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 20),
+          child: CustomDivider(),
+        ),
+      ],
+    );
   }
 }

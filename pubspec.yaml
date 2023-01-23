@@ -38,6 +38,7 @@ dependencies:
   reactive_forms: ^14.1.0
   wave: ^0.2.2
   google_fonts: ^3.0.1
+  font_awesome_flutter: ^10.3.0
 
 dev_dependencies:
   flutter_test:
