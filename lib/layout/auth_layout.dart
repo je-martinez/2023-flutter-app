@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 import '../utils/utils.dart';
 import '../widgets/widgets.dart';
+
+GoogleSignIn _googleSignIn = GoogleSignIn(
+  // Optional clientId
+  // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
+  scopes: <String>[
+    'email',
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ],
+);
 
 class AuthLayout extends StatefulWidget {
   const AuthLayout({super.key});
@@ -159,7 +169,13 @@ class _LoginFormState extends State<_LoginForm> {
 class _SignInOptions extends StatelessWidget {
   const _SignInOptions({Key? key}) : super(key: key);
 
-  void signInGoogle() {}
+  Future<void> _handleSignIn() async {
+    try {
+      await _googleSignIn.signIn();
+    } catch (error) {
+      print(error);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +184,7 @@ class _SignInOptions extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 70.0),
           child: TextButton(
-              onPressed: signInGoogle,
+              onPressed: _handleSignIn,
               style: ButtonStyle(
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8))),
