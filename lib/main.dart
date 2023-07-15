@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'layout/auth_layout.dart';
-import 'layout/main_layout.dart';
 
 void main() {
   runApp(const MyApp());

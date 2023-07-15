@@ -33,9 +33,9 @@ class _AuthLayoutState extends State<AuthLayout> {
             // ignore: prefer_const_constructors
             child: Padding(
               padding: const EdgeInsets.all(30),
-              child: Column(
+              child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     _Titles(
                       title: loginTitle,
                       subtitle: loginSubtitle,
