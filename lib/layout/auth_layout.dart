@@ -133,35 +133,28 @@ class _LoginFormState extends State<_LoginForm> {
                 'required': (error) => "Password is a required field."
               },
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)))),
-                    child: Padding(
-                        padding: const EdgeInsets.all(9),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              loginButtonTitle,
-                              style: GoogleFonts.poppins(),
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            const Icon(
-                              Icons.arrow_forward,
-                              size: 24.0,
-                            ),
-                          ],
-                        )),
-                  )),
-            )
+            Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                      minimumSize:
+                          MaterialStateProperty.all(const Size(300, 30)),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)))),
+                  child: Padding(
+                      padding: const EdgeInsets.all(9),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            loginButtonTitle,
+                            style: GoogleFonts.poppins(
+                                fontSize: 16, fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      )),
+                )),
           ],
         ));
   }
@@ -182,37 +175,32 @@ class _SignInOptions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 70.0),
-          child: TextButton(
-              onPressed: _handleSignIn,
-              style: ButtonStyle(
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8))),
-                  backgroundColor: MaterialStateProperty.all(Colors.blue)),
-              child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                                padding: EdgeInsets.only(right: 15),
-                                child: FaIcon(
-                                  FontAwesomeIcons.google,
-                                  color: Colors.white,
-                                  size: 15,
-                                ))),
-                        Text(
-                          signInWithGoogleButton,
-                          style: GoogleFonts.poppins(
-                              color: Colors.white, fontWeight: FontWeight.w600),
-                          textAlign: TextAlign.center,
-                        )
-                      ]))),
+        ElevatedButton(
+          onPressed: _handleSignIn,
+          style: ButtonStyle(
+              minimumSize: MaterialStateProperty.all(const Size(300, 30)),
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)))),
+          child: Padding(
+              padding: const EdgeInsets.all(9),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const FaIcon(
+                    FontAwesomeIcons.google,
+                    color: Colors.white,
+                    size: 15,
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    signInWithGoogleButton,
+                    style: GoogleFonts.poppins(
+                        fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              )),
         ),
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 20),
