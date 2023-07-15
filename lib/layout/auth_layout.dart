@@ -113,8 +113,7 @@ class _LoginFormState extends State<_LoginForm> {
           children: [
             ReactiveTextField(
               decoration: InputDecoration(
-                  hintText: "Please type your username",
-                  errorStyle: GoogleFonts.poppins()),
+                  hintText: "Username", errorStyle: GoogleFonts.poppins()),
               style: GoogleFonts.poppins(),
               formControlName: username,
               validationMessages: {
@@ -124,10 +123,12 @@ class _LoginFormState extends State<_LoginForm> {
             ),
             ReactiveTextField(
               decoration: InputDecoration(
-                  hintText: "Please type your password",
-                  errorStyle: GoogleFonts.poppins()),
+                  hintText: "Password", errorStyle: GoogleFonts.poppins()),
               formControlName: password,
               style: GoogleFonts.poppins(),
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
               validationMessages: {
                 'required': (error) => "Password is a required field."
               },
