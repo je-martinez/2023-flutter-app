@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_app_2023/screens/login_screen.dart';
+import 'package:flutter_app_2023/screens/main_tabs_screen.dart';
 import 'package:flutter_app_2023/screens/search_screen.dart';
 
 part 'app_router.gr.dart';
@@ -15,8 +16,8 @@ class AppRouter extends _$AppRouter {
           initial: true,
         ),
         AutoRoute(
-          path: "/search",
-          page: SearchRoute.page,
+          path: "/tabs",
+          page: MainTabsRoute.page,
         ),
       ];
 }

@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_2023/screens/feed_screen.dart';
@@ -5,17 +6,18 @@ import 'package:flutter_app_2023/screens/likes_screen.dart';
 import 'package:flutter_app_2023/screens/search_screen.dart';
 import 'package:flutter_app_2023/screens/settings_screen.dart';
 
-import '../screens/create_post_screen.dart';
+import 'create_post_screen.dart';
 import '../widgets/bottom_bar.dart';
 
-class MainLayout extends StatefulWidget {
-  const MainLayout({super.key});
+@RoutePage()
+class MainTabsScreen extends StatefulWidget {
+  const MainTabsScreen({super.key});
 
   @override
-  State<MainLayout> createState() => _MainLayoutState();
+  State<MainTabsScreen> createState() => _MainTabsScreenState();
 }
 
-class _MainLayoutState extends State<MainLayout>
+class _MainTabsScreenState extends State<MainTabsScreen>
     with SingleTickerProviderStateMixin {
   late int currentScreen;
   late TabController tabController;

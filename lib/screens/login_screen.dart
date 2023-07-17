@@ -138,7 +138,10 @@ class _LoginFormState extends State<_LoginForm> {
             Padding(
                 padding: const EdgeInsets.only(top: 15),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    final router = AutoRouter.of(context);
+                    router.navigateNamed("/tabs");
+                  },
                   style: ButtonStyle(
                       minimumSize:
                           MaterialStateProperty.all(const Size(300, 30)),

@@ -21,10 +21,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LoginScreen(),
       );
     },
-    SearchRoute.name: (routeData) {
+    MainTabsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SearchScreen(),
+        child: const MainTabsScreen(),
       );
     },
   };
@@ -45,15 +45,15 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [SearchScreen]
-class SearchRoute extends PageRouteInfo<void> {
-  const SearchRoute({List<PageRouteInfo>? children})
+/// [MainTabsScreen]
+class MainTabsRoute extends PageRouteInfo<void> {
+  const MainTabsRoute({List<PageRouteInfo>? children})
       : super(
-          SearchRoute.name,
+          MainTabsRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'SearchRoute';
+  static const String name = 'MainTabsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
