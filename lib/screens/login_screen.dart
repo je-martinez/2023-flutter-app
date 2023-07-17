@@ -140,7 +140,7 @@ class _LoginFormState extends State<_LoginForm> {
                 child: ElevatedButton(
                   onPressed: () {
                     final router = AutoRouter.of(context);
-                    router.navigateNamed("/tabs");
+                    router.pushNamed("/tabs");
                   },
                   style: ButtonStyle(
                       minimumSize:
