@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
-class WavesFooter extends StatelessWidget {
-  const WavesFooter({super.key});
+class WavesBackground extends StatelessWidget {
+  const WavesBackground({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const backgroundColor = Color(0xFFF15BB5);
+    const backgroundColor = Colors.white;
 
     const colors = [
       Color(0xFFFEE440),

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_2023/widgets/wave_background.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -30,22 +31,25 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-        body: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: size.width),
-            // ignore: prefer_const_constructors
-            child: Padding(
-              padding: const EdgeInsets.all(30),
-              child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _Titles(
-                      title: loginTitle,
-                      subtitle: loginSubtitle,
-                    ),
-                    _SignInOptions(),
-                    _LoginForm()
-                  ]),
-            )));
+        body: Stack(children: [
+      const WavesBackground(),
+      ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: size.width),
+          // ignore: prefer_const_constructors
+          child: Padding(
+            padding: const EdgeInsets.all(30),
+            child: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _Titles(
+                    title: loginTitle,
+                    subtitle: loginSubtitle,
+                  ),
+                  _SignInOptions(),
+                  _LoginForm()
+                ]),
+          ))
+    ]));
   }
 }
 
